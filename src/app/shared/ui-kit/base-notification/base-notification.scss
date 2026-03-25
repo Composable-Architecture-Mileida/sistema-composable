@@ -1,0 +1,39 @@
+.notification {
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: var(--radius-md);
+  border: 1px solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+  font-size: 0.875rem;
+  animation: slideIn 0.3s ease-out;
+
+  &.success {
+    background-color: var(--success-bg);
+    color: var(--success-text);
+    border-color: var(--success-border);
+  }
+
+  &.error {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    border-color: var(--error-border);
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: inherit;
+    opacity: 0.7;
+    &:hover { opacity: 1; }
+  }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
