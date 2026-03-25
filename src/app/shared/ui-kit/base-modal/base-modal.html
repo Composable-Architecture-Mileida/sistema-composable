@@ -1,0 +1,15 @@
+<div class="modal-overlay" *ngIf="isOpen()">
+  <div class="modal-content">
+    <h3>{{ title() }}</h3>
+    <p>{{ message() }}</p>
+    
+    <div class="modal-actions">
+      <app-base-button variant="outline" (onClick)="onCancel.emit()">
+        {{ cancelText() }}
+      </app-base-button>
+      <app-base-button variant="primary" (onClick)="onConfirm.emit()">
+        {{ confirmText() }}
+      </app-base-button>
+    </div>
+  </div>
+</div>
