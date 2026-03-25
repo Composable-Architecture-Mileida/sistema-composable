@@ -1,1 +1,23 @@
-<p>login works!</p>
+<div class="login-container">
+  <form class="login-card">
+    <h2>Bienvenida al Sistema</h2>
+    
+    <app-base-input 
+      label="Correo Electrónico" 
+      type="email" 
+      placeholder="ejemplo@correo.com"
+      (valueChange)="onEmailChange($event)">
+    </app-base-input>
+
+    <app-base-input 
+      label="Contraseña" 
+      type="password" 
+      placeholder="********"
+      (valueChange)="onPasswordChange($event)">
+    </app-base-input>
+
+    <app-base-button variant="primary" (onClick)="handleLogin()">
+      Iniciar Sesión
+    </app-base-button>
+  </form>
+</div>
