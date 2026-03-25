@@ -1,10 +1,11 @@
 <div class="login-container">
-  <form class="login-card">
+
+  <form class="login-card" (submit)="$event.preventDefault()">
     <h2>Bienvenida al Sistema</h2>
     <app-base-notification 
-        [type]="feedbackType()" 
-        [message]="feedbackMessage()"
-        (onClose)="feedbackMessage.set('')">
+            [type]="feedbackType()" 
+            [message]="feedbackMessage()"
+            (onClose)="feedbackMessage.set('')">
     </app-base-notification>
     <app-base-input 
       label="Correo Electrónico" 
@@ -24,4 +25,13 @@
       Iniciar Sesión
     </app-base-button>
   </form>
+  <app-base-modal
+    [isOpen]="showConfirmModal()"
+    title="¿Restablecer contraseña?"
+    message="Has fallado varios intentos. ¿Deseas iniciar el proceso de recuperación?"
+    confirmText="Sí, recuperar"
+    cancelText="Intentar de nuevo"
+    (onConfirm)="processReset()"
+    (onCancel)="showConfirmModal.set(false)">
+  </app-base-modal>
 </div>
