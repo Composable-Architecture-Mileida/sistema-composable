@@ -1,1 +1,15 @@
-<p>base-input works!</p>
+<div class="field-wrapper">
+  <label *ngIf="label()">{{ label() }}</label>
+  
+  <input 
+    [type]="type()" 
+    [placeholder]="placeholder()" 
+    [value]="value()"
+    [class.has-error]="!!error()"
+    (input)="onInputChange($event)"
+  />
+
+  <span class="error-text" *ngIf="error()">
+    {{ error() }}
+  </span>
+</div>

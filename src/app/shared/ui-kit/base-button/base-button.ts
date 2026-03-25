@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-base-button',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './base-button.component.html',
-  styleUrl: './base-button.component.scss' // <-- Vinculado al archivo externo
+  templateUrl: './base-button.html',
+  styleUrl: './base-button.scss' // <-- Vinculado al archivo externo
 })
 export class BaseButtonComponent {
   variant = input<'primary' | 'outline'>('primary');

@@ -1,0 +1,45 @@
+.field-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-bottom: 1.25rem;
+  width: 100%;
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--neutral-800);
+  }
+
+  input {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid var(--neutral-300);
+    border-radius: var(--radius-md);
+    background-color: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+
+    &:focus {
+      border-color: var(--primary-500);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    &.has-error {
+      border-color: var(--error-500);
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      }
+    }
+
+    &::placeholder {
+      color: var(--neutral-300);
+    }
+  }
+
+  .error-text {
+    font-size: 0.75rem;
+    color: var(--error-500);
+    font-weight: 500;
+  }
+}
