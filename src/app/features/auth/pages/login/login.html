@@ -1,7 +1,11 @@
 <div class="login-container">
   <form class="login-card">
     <h2>Bienvenida al Sistema</h2>
-    
+    <app-base-notification 
+        [type]="feedbackType()" 
+        [message]="feedbackMessage()"
+        (onClose)="feedbackMessage.set('')">
+    </app-base-notification>
     <app-base-input 
       label="Correo Electrónico" 
       type="email" 

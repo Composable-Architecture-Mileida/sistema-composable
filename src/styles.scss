@@ -20,6 +20,17 @@
   // Layout
   --radius-md: 8px;
   --font-main: 'Inter', system-ui, sans-serif;
+
+  // Colores de Feedback
+    --success-bg: #ecfdf5;
+    --success-text: #065f46;
+    --success-border: #10b981;
+
+    --error-bg: #fef2f2;
+    --error-text: #991b1b;
+    --error-border: #ef4444;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 // 2. Estilos Globales Base
@@ -29,3 +40,6 @@ body {
   background-color: var(--neutral-100);
   color: var(--neutral-800);
 }
+
+//Notificaciones
+
