@@ -1,0 +1,16 @@
+# docker-compose.yml simplificado
+services:
+  frontend:
+    build: ./frontend
+    ports: ["4200:80"]
+  
+  backend:
+    build: ./backend
+    ports: ["3000:3000"]
+    environment:
+      - DATABASE_URL=postgres://user:pass@db:5432/mydb
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_PASSWORD=pass
