@@ -1,59 +1,37 @@
-# SistemaComposable
+# 🚀 Sistema Composable - Angular 18 + SSR
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.3.
+Este proyecto implementa una **Arquitectura Desacoplada Orientada a Dominios** siguiendo las mejores prácticas de escalabilidad y mantenibilidad para entornos Cloud y Microservicios.
 
-## Development server
+## 🏗️ Arquitectura del Proyecto
 
-To start a local development server, run:
+El sistema está dividido en tres capas principales para asegurar el desacoplamiento:
 
+* **Core (`src/app/core`)**: Contiene la "columna vertebral" de la app. Servicios singleton (Auth), interceptores, guardias y modelos globales. No depende de ninguna feature.
+* **Shared (`src/app/shared`)**: El **UI-Kit**. Componentes atómicos (botones, inputs) y utilidades que se usan en todo el proyecto. Son componentes "tontos" (sin lógica de negocio).
+* **Features (`src/app/features`)**: Módulos de negocio independientes (Auth, Dashboard, etc.). Cada uno es "composable" y puede ser extraído o modificado sin afectar al resto.
+
+## 🛠️ Stack Tecnológico
+- **Angular 18** (Standalone Components & Signals).
+- **SSR & Hydration** (Server-Side Rendering para Performance y SEO).
+- **Docker** (Contenedores para despliegue consistente).
+- **Node.js Proxy** (Comunicación con Microservicios externos).
+
+## 🚀 Guía de Inicio Rápido
+
+1.  **Instalar dependencias:**
+    ```bash
+    npm install
+    ```
+2.  **Correr en desarrollo (con Proxy):**
+    ```bash
+    npx ng serve
+    ```
+3.  **Construir para Producción (SSR):**
+    ```bash
+    npm run build
+    ```
+
+## 🐳 Entorno Docker
+Para levantar el entorno completo con Microservicios:
 ```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+docker-compose up --build
