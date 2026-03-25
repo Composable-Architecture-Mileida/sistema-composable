@@ -24,6 +24,12 @@
     <app-base-button variant="primary" (onClick)="handleLogin()">
       Iniciar Sesión
     </app-base-button>
+
+    <app-base-loader 
+        *ngIf="isLoading()" 
+        [fullScreen]="true" 
+        message="Verificando credenciales...">
+    </app-base-loader>
   </form>
   <app-base-modal
     [isOpen]="showConfirmModal()"
