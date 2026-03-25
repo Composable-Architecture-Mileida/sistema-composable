@@ -1,0 +1,35 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--neutral-100);
+}
+
+.login-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 400px;
+
+  h2 {
+    margin-bottom: 1.5rem;
+    color: var(--neutral-800);
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  // Estilo para el botón dentro de la tarjeta
+  app-base-button {
+    display: block;
+    margin-top: 1.5rem;
+    
+    // Hacemos que el botón ocupe todo el ancho
+    ::ng-deep button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
