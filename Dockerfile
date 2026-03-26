@@ -24,4 +24,4 @@ COPY --from=build /app/package*.json ./
 EXPOSE 4200
 
 # Comando para arrancar el servidor de Angular SSR
-CMD ["node", "dist/sistema-composable/server/main.server.mjs"]
+CMD ["node", "dist/sistema-composable/server/server.mjs"]
