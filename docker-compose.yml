@@ -1,16 +1,11 @@
-# docker-compose.yml simplificado
 services:
   frontend:
-    build: ./frontend
-    ports: ["4200:80"]
-  
-  backend:
-    build: ./backend
-    ports: ["3000:3000"]
+    build: .
+    container_name: sistema-composable-frontend
+    ports:
+      - "4200:4200"
     environment:
-      - DATABASE_URL=postgres://user:pass@db:5432/mydb
+      - NODE_ENV=production
+    restart: always
 
-  db:
-    image: postgres:15-alpine
-    environment:
-      - POSTGRES_PASSWORD=pass
+# Aquí agregaremos el servicio 'backend' más adelante
