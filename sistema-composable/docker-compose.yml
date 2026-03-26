@@ -1,10 +1,11 @@
 services:
   frontend:
     build: .
-    container_name: sistema-frontend
+    container_name: sistema-composable-frontend
     ports:
       - "4200:4000" # Mapeamos el 4000 interno de SSR al 4200 externo
     environment:
       - NODE_ENV=production
       - PORT=4000
+      - HOST=0.0.0.0 # Esto le dice a Node que escuche en todas las interfaces
     restart: always
