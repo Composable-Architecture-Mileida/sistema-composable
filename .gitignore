@@ -1,0 +1,13 @@
+# Node dependencies (Cubre todas las carpetas apps y services)
+**/node_modules/
+**/dist/
+**/.angular/
+
+# Docker & Environment
+.env
+.env.*
+docker-data/
+
+# IDEs
+.vscode/
+.idea/
