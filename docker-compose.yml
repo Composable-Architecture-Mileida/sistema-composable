@@ -7,6 +7,11 @@ services:
       POSTGRES_USER: dev_user
       POSTGRES_PASSWORD: dev_password
       POSTGRES_DB: composable_auth
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dev_user -d composable_auth"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     ports:
       - "5432:5432"
     volumes:
@@ -26,7 +31,8 @@ services:
     environment:
       DATABASE_URL: "postgresql://dev_user:dev_password@database:5432/composable_auth?schema=public"
     depends_on:
-      - database
+      database:
+        condition: service_healthy # Espera a que la DB esté realmente lista
     ports:
       - "3000:3000"
 
