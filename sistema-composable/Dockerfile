@@ -1,27 +1,27 @@
 # ETAPA 1: Construcción (Build)
-FROM node:20-alpine AS build
+FROM node:20-alpine AS build-step
 
 WORKDIR /app
 
 # Copiamos archivos de dependencias
 COPY package*.json ./
+
+# Instalamos dependencias
 RUN npm install
 
-# Copiamos el resto del código y construimos
+# Copiamos el resto del código y compilamos
 COPY . .
-RUN npm run build
+RUN npm run build -- --configuration production
 
-# ETAPA 2: Ejecución (Runtime)
-FROM node:20-alpine
+# ETAPA 2: Servidor de Producción (Nginx)
+FROM nginx:1.25-alpine
 
-WORKDIR /app
+# Copiamos los archivos compilados desde la etapa anterior
+# Nota: La ruta 'dist/sistema-composable/browser' puede variar según tu angular.json
+COPY --from=build-step /app/dist/sistema-composable/browser /usr/share/nginx/html
 
-# Copiamos solo lo necesario desde la etapa de construcción
-COPY --from=build /app/dist/sistema-composable ./dist/sistema-composable
-COPY --from=build /app/package*.json ./
+# Exponemos el puerto 80 (estándar de Nginx)
+EXPOSE 80
 
-# Exponemos el puerto del servidor SSR (por defecto 4000 o 4200)
-EXPOSE 4200
-
-# Comando para arrancar el servidor de Angular SSR
-CMD ["node", "dist/sistema-composable/server/server.mjs"]
+# Arrancamos Nginx
+CMD ["nginx", "-g", "daemon off;"]
