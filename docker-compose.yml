@@ -18,6 +18,11 @@ services:
       context: ./sistema-composable-backend/auth-microservicio
       dockerfile: Dockerfile
     container_name: auth-api
+    # --- ESTO ES EL HOT RELOAD ---
+    volumes:
+      - ./sistema-composable-backend/auth-microservicio:/app
+      - /app/node_modules
+    # -----------------------------
     environment:
       DATABASE_URL: "postgresql://dev_user:dev_password@database:5432/composable_auth?schema=public"
     depends_on:
