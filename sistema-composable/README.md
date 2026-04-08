@@ -47,3 +47,8 @@ El sistema está dividido en tres capas principales para asegurar el desacoplami
 Para levantar el entorno completo con Microservicios:
 ```bash
 docker-compose up --build
+
+## 🐳 Orquestación con Docker
+Para levantar todo el ecosistema (DB + Back + Front):
+```bash
+docker-compose up --build
