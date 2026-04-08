@@ -52,3 +52,11 @@ docker-compose up --build
 Para levantar todo el ecosistema (DB + Back + Front):
 ```bash
 docker-compose up --build
+
+### Gestión de Contenedores
+- **Dockerfiles individuales:** Ubicados en cada servicio para definir su entorno de ejecución.
+- **Docker Compose:** Ubicado en la raíz para la interconexión de servicios y gestión de volúmenes de datos.
+
+## 🛠️ Notas de Desarrollo
+- Antes de iniciar, asegurar que los puertos 3000 y 4200 estén libres.
+- Usar `docker-compose down` para liberar recursos al finalizar.

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { PrismaService } from '../../core/database/prisma.service';
 import { PrismaAuthRepository } from './infrastructure/persistence/prisma-auth.repository';
 
+
 @Module({
   providers: [
     PrismaService,
@@ -10,6 +11,6 @@ import { PrismaAuthRepository } from './infrastructure/persistence/prisma-auth.r
       useClass: PrismaAuthRepository, // Implementación actual (Postgres)
     },
   ],
-  exports: ['AUTH_REPOSITORY'],
+  exports: ['AUTH_REPOSITORY', PrismaService],
 })
 export class AuthModule {}
