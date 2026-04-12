@@ -1,0 +1,10 @@
+services:
+  auth-api-test:
+    container_name: auth-api-test
+    build:
+      context: ./sistema-composable-backend/auth-microservicio
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - composable-db # Solo si necesitas probar conexión a DB de inmediato

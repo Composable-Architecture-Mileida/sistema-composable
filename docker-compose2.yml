@@ -1,0 +1,52 @@
+services:
+  # 1. BASE DE DATOS (PostgreSQL)
+  database:
+    image: postgres:16-alpine
+    container_name: composable-db
+    environment:
+      POSTGRES_USER: dev_user
+      POSTGRES_PASSWORD: dev_password
+      POSTGRES_DB: composable_auth
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dev_user -d composable_auth"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. BACKEND (NestJS - Auth Microservice)
+  auth-service:
+    build:
+      context: ./sistema-composable-backend/auth-microservicio
+      dockerfile: Dockerfile
+    container_name: auth-api
+    command: npm run start:dev
+    # --- ESTO ES EL HOT RELOAD ---
+    volumes:
+      - ./sistema-composable-backend/auth-microservicio:/app
+      - /app/node_modules
+    # -----------------------------
+    environment:
+      DATABASE_URL: "postgresql://dev_user:dev_password@database:5432/composable_auth?schema=public"
+    depends_on:
+      database:
+        condition: service_healthy # Espera a que la DB esté realmente lista
+    ports:
+      - "3000:3000"
+
+  # 3. FRONTEND (Angular 18)
+  frontend:
+    build:
+      context: ./sistema-composable
+      dockerfile: Dockerfile
+    container_name: angular-app
+    ports:
+      - "4200:80" # Ajustar según si usas SSR o CSR
+    depends_on:
+      - auth-service
+
+volumes:
+  postgres_data:
