@@ -1,52 +1,58 @@
 services:
-  # 1. BASE DE DATOS (PostgreSQL)
-  database:
+  # --- BASE DE DATOS ---
+  composable-db:
     image: postgres:16-alpine
     container_name: composable-db
+    restart: always
     environment:
-      POSTGRES_USER: dev_user
-      POSTGRES_PASSWORD: dev_password
-      POSTGRES_DB: composable_auth
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U dev_user -d composable_auth"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+        POSTGRES_USER: ${DB_USER}       # Correcto: Clave: Valor
+        POSTGRES_PASSWORD: ${DB_PASSWORD}
+        POSTGRES_DB: ${DB_NAME}
+    # environment:
+    #   POSTGRES_USER: dev_user
+    #   POSTGRES_PASSWORD: dev_password
+    #   POSTGRES_DB: composable_auth
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-  # 2. BACKEND (NestJS - Auth Microservice)
-  auth-service:
+  # --- BACKEND (MICROSERVICIO AUTH) ---
+  auth-api:
+    container_name: auth-api
     build:
       context: ./sistema-composable-backend/auth-microservicio
       dockerfile: Dockerfile
-    container_name: auth-api
-    command: npm run start:dev
-    # --- ESTO ES EL HOT RELOAD ---
-    volumes:
-      - ./sistema-composable-backend/auth-microservicio:/app
-      - /app/node_modules
-    # -----------------------------
-    environment:
-      DATABASE_URL: "postgresql://dev_user:dev_password@database:5432/composable_auth?schema=public"
-    depends_on:
-      database:
-        condition: service_healthy # Espera a que la DB esté realmente lista
+    restart: always
     ports:
       - "3000:3000"
-
-  # 3. FRONTEND (Angular 18)
-  frontend:
-    build:
-      context: ./sistema-composable
-      dockerfile: Dockerfile
-    container_name: angular-app
-    ports:
-      - "4200:4000" # Ajustar según si usas SSR o CSR
+    env_file:
+      .env
     depends_on:
-      - auth-service
+      composable-db:
+        condition: service_healthy
+    # environment:
+    #   DATABASE_URL: "postgresql://dev_user:dev_password@composable-db:5432/composable_auth?schema=public"
+    # depends_on:
+    #   composable-db:
+    #     condition: service_healthy
+
+  # --- FRONTEND (ANGULAR + NGINX) ---
+  angular-app:
+    container_name: angular-app
+    build:
+      context: ./sistema-composable # Ajusta según tu nombre de carpeta
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "4200:80" # Tu PC entra por 4200, Nginx escucha en 80
+    depends_on:
+      - auth-api
 
 volumes:
   postgres_data:

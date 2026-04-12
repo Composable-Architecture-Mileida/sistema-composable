@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  frontend-test:
+    container_name: angular-app-test
+    build:
+      context: ./sistema-composable # Ajusta a tu ruta real
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80" # Tu PC (4200) -> Nginx (80)
