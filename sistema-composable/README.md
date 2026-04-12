@@ -60,3 +60,59 @@ docker-compose up --build
 ## 🛠️ Notas de Desarrollo
 - Antes de iniciar, asegurar que los puertos 3000 y 4200 estén libres.
 - Usar `docker-compose down` para liberar recursos al finalizar.
+
+## 🛠️ Gestión de Infraestructura (Docker)
+
+Para garantizar un entorno de desarrollo limpio y evitar conflictos de caché o volúmenes, sigue estos pasos según sea necesario.
+
+### 1. Reinicio Estándar (Flujo Diario)
+Utiliza este flujo cuando realices cambios en el código que necesiten ser reflejados en los contenedores.
+```bash
+# Detener contenedores y eliminar huérfanos
+docker-compose down --remove-orphans
+
+# Reconstruir y levantar en segundo plano
+docker-compose up --build -d
+
+### 📊 Monitoreo y Debugging (Logs)
+
+Para seguir el rastro de ejecución de los microservicios y la base de datos en tiempo real:
+
+| Comando | Descripción |
+| :--- | :--- |
+| `docker-compose logs -f` | Ver logs de **todos** los servicios en tiempo real. |
+| `docker-compose logs -f auth-api` | Ver logs solo del **Backend** (NestJS). |
+| `docker-compose logs -f angular-app` | Ver logs solo del **Frontend** (Nginx). |
+| `docker-compose logs -f composable-db` | Ver logs de la **Base de Datos** (Postgres). |
+
+#### 🔍 Tips de Debugging:
+* **Filtro de errores:** Si los logs son muy extensos, puedes usar:
+  `docker-compose logs auth-api | grep ERROR`
+* **Últimas líneas:** Para ver solo lo más reciente (ej. las últimas 50 líneas):
+  `docker-compose logs --tail=50 -f auth-api`
+
+### 🛑 Detención de Servicios
+
+Dependiendo de qué tan profunda necesites que sea la limpieza, elige uno de estos comandos:
+
+| Comando | Acción | ¿Qué hace? |
+| :--- | :--- | :--- |
+| `docker-compose stop` | **Pausar** | Detiene los servicios pero **mantiene** los contenedores creados. |
+| `docker-compose down` | **Bajar** | Detiene y **elimina** contenedores y redes internas. Es el estándar. |
+| `docker-compose down -v` | **Borrar Todo** | Detiene, elimina contenedores y **borra los volúmenes (Base de Datos)**. |
+
+#### 💡 Cuándo usar cada uno:
+* Usa `stop` si vas a volver pronto y no quieres que Docker recree todo.
+* Usa `down` al finalizar tu jornada de desarrollo para liberar recursos de RAM/CPU.
+* Usa `down -v` solo si necesitas resetear la base de datos desde cero (limpiar tablas y datos).
+
+netstat -ano | findstr :5432
+
+Cambia [PID] por el número que encontraste (ej. 1234)
+taskkill /F /PID [PID]
+
+Limpieza de redes "fantasma" en Docker
+A veces el puerto está reservado por una red de Docker que no se cerró bien. Limpia las redes con:
+
+Bash
+docker network prune -f
