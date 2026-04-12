@@ -1,5 +1,5 @@
 import { Controller, Get, Inject } from '@nestjs/common';
-import { IAuthRepository } from './domains/auth/domain/auth.repository.interface';
+import type { IAuthRepository } from './domains/auth/domain/auth.repository.interface';
 import { AppService } from './app.service';
 
 @Controller()
