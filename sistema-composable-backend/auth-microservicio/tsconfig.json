@@ -3,8 +3,8 @@
     "module": "commonjs", 
     "target": "ES2021",
     "outDir": "./dist",
-    "baseUrl": "./", // <--- Apunta a la carpeta de código fuente
-    "rootDir": "./",    // <--- Define la raíz del proyecto para mantener la estructura
+    "baseUrl": "./src",
+    "rootDir": "./src",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,

@@ -23,6 +23,7 @@ services:
       context: ./sistema-composable-backend/auth-microservicio
       dockerfile: Dockerfile
     container_name: auth-api
+    command: npm run start:dev
     # --- ESTO ES EL HOT RELOAD ---
     volumes:
       - ./sistema-composable-backend/auth-microservicio:/app
