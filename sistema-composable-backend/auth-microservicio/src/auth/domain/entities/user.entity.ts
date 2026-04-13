@@ -1,3 +1,8 @@
+/**
+ * Entidad que representa al usuario dentro del dominio de identidad.
+ * @property {string} id - Identificador único universal (UUID).
+ */
+
 export class User {
   constructor(
     public readonly id: string,
